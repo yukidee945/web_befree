@@ -10,12 +10,17 @@
 <body>
 
 	<div class="container">
-		<?php require_once "./src/menu.php"; ?>
+		<?php
+		if (isset($_COOKIE['login']))
+			require_once "./src/menu_login.php";
+		else
+			require_once "./src/menu.php"; ?>
+		<?php require_once "./src/mod.php"; ?>
 
 		<main class="content">
 			<h1>О нас</h1>
 			<BR>
-			<a href="catalog.html" target="_self">
+			<a href="catalog.php" target="_self">
 				<img src="image/main_banner.jpg" alt="Новая коллекция" width="90%">
 			</a>
 			</p><BR>

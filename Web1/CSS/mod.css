@@ -1,0 +1,60 @@
+/* Cookie Popup */
+#cookiePopup {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    max-width: 300px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    padding: 15px 20px;
+    display: none;
+    z-index: 10000;
+    font-family: Arial, sans-serif;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Содержимое модалки */
+#cookiePopup .cookie-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* Иконка cookie */
+#cookiePopup .cookie-body img {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+/* Текст */
+#cookiePopup .cookie-body .cookie-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+
+#cookiePopup .cookie-body .cookie-text a {
+    color: #0077cc;
+    text-decoration: underline;
+}
+
+/* Кнопка принять */
+#cookiePopup button {
+    margin-top: 10px;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#cookiePopup button:hover {
+    background-color: #005fa3;
+}

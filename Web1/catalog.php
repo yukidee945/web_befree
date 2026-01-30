@@ -46,7 +46,11 @@ $result = $stmt->get_result();
 
 <body>
 	<div class="container">
-		<?php require_once "./src/menu.php"; ?>
+		<?php if (isset($_COOKIE['login']))
+			require_once "./src/menu_login.php";
+		else
+			require_once "./src/menu.php"; ?>
+		<?php require_once "./src/mod.php"; ?>
 
 		<main class="content">
 			<h1>Каталог</h1>
@@ -107,6 +111,73 @@ $result = $stmt->get_result();
 												</div>
 
 												<p class="modal-details"><?= nl2br(htmlspecialchars($item['details'])) ?></p>
+
+												<a href="cart.php?add=<?= $item['id'] ?>" class="add-to-cart-btn">
+													Добавить в корзину
+												</a>
+												<!-- ОТЗЫВЫ О ТОВАРЕ -->
+												<h3>Отзывы:</h3>
+
+												<div class="reviews-box">
+													<?php
+													$rev_sql = "SELECT * FROM web_stars WHERE item_id = ?";
+													$rev_stmt = $conn->prepare($rev_sql);
+													$rev_stmt->bind_param("i", $item['id']);
+													$rev_stmt->execute();
+													$reviews = $rev_stmt->get_result();
+
+													if ($reviews->num_rows > 0):
+														while ($rev = $reviews->fetch_assoc()):
+															?>
+															<div class="review-item">
+																<p><b><?= htmlspecialchars($rev['username']) ?></b> —
+																	⭐<?= $rev['stars'] ?></p>
+																<p><?= nl2br(htmlspecialchars($rev['review'])) ?></p>
+																<small><?= $rev['created_at'] ?></small>
+																<hr>
+															</div>
+															<?php
+														endwhile;
+													else:
+														echo "<p>Пока нет отзывов.</p>";
+													endif;
+													?>
+												</div>
+
+												<br>
+
+												<!-- ФОРМА ДОБАВЛЕНИЯ ОТЗЫВА -->
+												<h3>Оставить отзыв:</h3>
+
+												<form action="lib/add_review.php" method="POST" class="review-form">
+													<input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+
+													<label>Ваш логин:</label>
+													<div class="login-display">
+														<?= htmlspecialchars($_COOKIE['login'] ?? 'Войдите в аккаунт!!!') ?>
+													</div>
+
+													<input type="hidden" name="login"
+														value="<?= htmlspecialchars($_COOKIE['login'] ?? '') ?>">
+
+													<label>Оценка (1–5):</label>
+													<select name="stars" required>
+														<option value="5">⭐⭐⭐⭐⭐</option>
+														<option value="4">⭐⭐⭐⭐</option>
+														<option value="3">⭐⭐⭐</option>
+														<option value="2">⭐⭐</option>
+														<option value="1">⭐</option>
+													</select>
+
+													<label>Ваш отзыв:</label>
+													<textarea name="review" required
+														style="width:100%; height:80px;"></textarea>
+
+													<button type="submit" class="add-review-btn">
+														Отправить отзыв
+													</button>
+												</form>
+
 											</div>
 										</div>
 									</div>

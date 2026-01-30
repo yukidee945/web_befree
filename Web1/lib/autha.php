@@ -36,6 +36,6 @@ $_SESSION['user_login'] = $user['login'];
 setcookie('login', $login, time() + 3600 * 24 * 30, "/", "", false, true);
 
 // 5. Перенаправляем на личную страницу
-header('Location: /Web1/');
+header('Location: ../user.php');
 exit;
 ?>

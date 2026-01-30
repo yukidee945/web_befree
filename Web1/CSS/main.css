@@ -280,52 +280,68 @@ button:hover {
     background: #005fa3;
 }
 
-/* Переключатель (toggle switch) */
 .switch {
     position: relative;
     display: inline-block;
     width: 50px;
-    height: 26px;
-    margin-bottom: 20px;
+    /* общая ширина блока */
+    height: 35px;
+    /* общая высота блока */
+
 }
 
+/* Прячем стандартный checkbox */
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
 
-.slider {
+/* Фон ползунка (может быть меньше кружка) */
+.switch .slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
+    top: -35px;
+    /* выравнивание фона по вертикали */
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 50px;
+    /* ширина фона меньше кружка */
+    height: 30px;
+    /* тонкий фон */
     background-color: #ccc;
-    border-radius: 26px;
     transition: 0.4s;
+    border-radius: 35px;
+    /* закругление фона */
 }
 
-.slider:before {
+/* Белый кружок */
+.switch .slider:before {
     position: absolute;
     content: "";
     height: 20px;
+    /* размер кружка больше фона */
     width: 20px;
-    left: 3px;
-    bottom: 3px;
+    left: 0;
+    /* отступ от края контейнера */
+    bottom: 5px;
+    /* регулируем вертикальное положение */
     background-color: white;
-    border-radius: 50%;
     transition: 0.4s;
+    border-radius: 50%;
 }
 
+/* Активный цвет */
 .switch input:checked+.slider {
     background-color: #0077cc;
 }
 
+/* Позиция кружка при ON */
 .switch input:checked+.slider:before {
-    transform: translateX(24px);
+    transform: translateX(30px);
+    /* смещение по ширине контейнера */
 }
+
+
 
 .catalog-grid {
     display: grid;
@@ -541,4 +557,394 @@ footer .footer-links li a {
 
 .modal-checkbox {
     display: none;
+}
+
+/* ==== Слайдер ==== */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    /* ограничим ширину */
+    aspect-ratio: 2 / 3;
+    /* 480x720 — пропорция 2:3 */
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin: 40px auto;
+}
+
+.slider .item {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.slider .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.slider .item.active img {
+    transform: scale(1.05);
+}
+
+/* ==== Кнопки ==== */
+.previous,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    user-select: none;
+    transition: 0.3s;
+}
+
+.previous:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.previous {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* ==== Точки ==== */
+.slider-dots {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.slider-dots span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    background-color: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slider-dots span.active {
+    background-color: #222;
+}
+
+/* ==== Мобильная адаптация ==== */
+@media (max-width: 480px) {
+    .slider {
+        max-width: 100%;
+        aspect-ratio: 2 / 3;
+        border-radius: 12px;
+    }
+
+    .previous,
+    .next {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+        line-height: 32px;
+    }
+
+    .slider-dots span {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* ==== Увеличенная футерная модалка ==== */
+#footerPdfModal {
+    display: none;
+    /* скрыто по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    /* уменьшаем padding, чтобы больше места для окна */
+    box-sizing: border-box;
+}
+
+/* Контейнер модалки */
+#footerPdfModal .footer-modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 95%;
+    /* увеличиваем ширину */
+    max-width: 1200px;
+    /* увеличиваем максимальную ширину */
+    max-height: 90vh;
+    /* увеличиваем высоту */
+    overflow-y: auto;
+    padding: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-sizing: border-box;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Крестик закрытия */
+#footerPdfModal .footer-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#footerPdfModal .footer-modal-close:hover {
+    color: red;
+}
+
+/* PDF iframe */
+#footerPdfModal .footer-modal-iframe {
+    width: 100%;
+    height: 700px;
+    /* увеличиваем высоту */
+    border-radius: 8px;
+    display: block;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+/* Кнопка "Скачать PDF" */
+#footerPdfModal .footer-download-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    /* увеличенная кнопка */
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s;
+    align-self: center;
+}
+
+#footerPdfModal .footer-download-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптив */
+@media (max-width: 900px) {
+    #footerPdfModal .footer-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #footerPdfModal .footer-modal-iframe {
+        height: 500px;
+    }
+
+    #footerPdfModal .footer-modal-close {
+        font-size: 28px;
+        top: 10px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    #footerPdfModal .footer-modal-iframe {
+        height: 350px;
+    }
+}
+
+.add-to-cart-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #0077cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.add-to-cart-btn:hover {
+    background: #005fa3;
+}
+
+.cart-container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+}
+
+.cart-table th {
+    background: #f4f4f4;
+    padding: 15px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.cart-table td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-table img {
+    border-radius: 8px;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 28px;
+    background: #0077cc;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.qty-btn:hover {
+    background: #005fa3;
+}
+
+.remove-btn {
+    color: #ff4c4c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.remove-btn:hover {
+    text-decoration: underline;
+}
+
+.cart-summary {
+    max-width: 320px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+    float: right;
+}
+
+.cart-summary h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 15px;
+}
+
+.checkout-btn:hover {
+    background: #218838;
+}
+
+.clear-cart {
+    display: inline-block;
+    margin-top: 15px;
+    color: #ff7300;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.clear-cart:hover {
+    text-decoration: underline;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Контейнер изменения количества */
+.qty-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Поле ввода количества */
+.qty-input {
+    width: 60px;
+    padding: 6px 10px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    font-size: 15px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.qty-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+    outline: none;
+}
+
+/* Кнопка ОК */
+.qty-btn {
+    padding: 0px 0px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    margin-top: -8px;
+}
+
+
+.qty-btn:hover {
+    background: #005bb5;
 }

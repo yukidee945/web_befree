@@ -10,7 +10,11 @@
 <body>
 
 	<div class="container">
-		<?php require_once "./src/menu.php"; ?>
+		<?php if (isset($_COOKIE['login']))
+			require_once "./src/menu_login.php";
+		else
+			require_once "./src/menu.php"; ?>
+		<?php require_once "./src/mod.php"; ?>
 		<main class="content">
 			<h1>Контакты
 				<h1>
@@ -75,8 +79,13 @@
 					<form method="post" action="./lib/contactsa.php">
 						<div class="faq">
 							<label>Логин пользователя</label>
-							<input type="text" name="login" placeholder="Ваш логин" required
-								value="<?= htmlspecialchars($_COOKIE['login'] ?? '') ?>">
+
+							<div class="login-display">
+								<?= htmlspecialchars($_COOKIE['login'] ?? 'Войдите в аккаунт!!!') ?>
+							</div>
+
+							<input type="hidden" name="login" value="<?= htmlspecialchars($_COOKIE['login'] ?? '') ?>">
+
 
 							<label>Пол</label><br>
 							<label><input type="radio" name="gender" value="male" required> Мужской</label>

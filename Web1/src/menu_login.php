@@ -6,8 +6,8 @@
             <ul>
                 <li><a href="./index.php">Главное</a></li>
                 <li><a href="./catalog.php">Каталог</a></li>
-                <li><a href="./reg.php">Регистрация</a></li>
-                <li><a href="./auth.php">Авторизация</a></li>
+                <li><a href="./cart.php">Корзина</a></li>
+                <li><a href="./user.php">Личный кабинет</a></li>
                 <li><a href="./about.php">О нас</a></li>
                 <li><a href="./contacts.php">Контакты</a></li>
             </ul>

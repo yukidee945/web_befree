@@ -64,6 +64,6 @@ $sql = 'INSERT INTO web_users (login, user_name, user_surname, user_lastname, ph
 $query = $pdo->prepare($sql);
 $query->execute([$login, $user_name, $user_surname, $user_lastname, $phone, $email, $password]);
 
-header('Location: /Web1');
+header('Location: ../user.php');
 exit;
 ?>

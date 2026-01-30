@@ -10,7 +10,11 @@
 <body>
 
     <div class="container">
-        <?php require_once "./src/menu.php"; ?>
+        <?php if (isset($_COOKIE['login']))
+            require_once "./src/menu_login.php";
+        else
+            require_once "./src/menu.php"; ?>
+        <?php require_once "./src/mod.php"; ?>
 
         <main class="content">
             <h1>Авторизация</h1>
